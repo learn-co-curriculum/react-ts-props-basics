@@ -14,7 +14,7 @@ function BlogContent(props: Props) {
     } else {
       // show published content
       return (
-        <div>
+        <div id="blog-content">
           <h1>{props.articleText}</h1>
           <p>{props.minutesToRead} minutes to read</p>
         </div>

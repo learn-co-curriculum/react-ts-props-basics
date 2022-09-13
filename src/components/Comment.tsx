@@ -3,7 +3,7 @@ interface Props {
   }
   
   function Comment(props: Props) {
-    return <div>{props.commentText}</div>;
+    return <div className="comment">{props.commentText}</div>;
   }
   
   export default Comment

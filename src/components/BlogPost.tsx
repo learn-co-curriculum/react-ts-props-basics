@@ -3,7 +3,7 @@ import Comment from './Comment';
 
 function BlogPost() {
     return (
-      <div>
+      <div id="blog-post">
         <BlogContent
             articleText="Dear Reader: Bjarne Stroustrup has the perfect lecture oration."
             isPublished={true}
