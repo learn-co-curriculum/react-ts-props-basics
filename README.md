@@ -24,50 +24,52 @@ Our application will include the following components:
 - `BlogPost` - the 'top level' React component, which is responsible for
   rendering both `BlogContent` and `Comment`
 
-Fork and clone this repo if you would like to follow along. To see the completed 
-app if you do not code along, the `solution` branch is available.
+Fork and clone this repo if you would like to follow along. Run
+`npm install && npm start` to get it running. To see the completed app if you do
+not code along, the `solution` branch is available.
 
-> **Note**: If coding along, the app will initially run with an error. We will 
+> **Note**: If coding along, the app will initially run with an error. We will
 > fix that shortly into the lesson.
 
 ### Making Components Dynamic
 
 Time to put the **dynamic** aspect of components to use! Let's start with the
-`BlogContent` component. Create a `BlogComponent.tsx` file in the `src/components`
-folder with the following:
+`BlogContent` component. Create a `BlogComponent.tsx` file in the
+`src/components` folder with the following:
 
 ```jsx
 function BlogContent(props: any) {
   return <div>{props.articleText}</div>;
 }
 
-export default BlogContent
+export default BlogContent;
 ```
 
 You should see something new in the above code. Our function has a parameter
 defined called `props`. Also, inside the return statement, we have this funky
-syntax: `{props.articleText}`. 
+syntax: `{props.articleText}`.
 
 This line is telling React to place the value that `props.articleText`
 represents within the `<div>`. Ok, so where does `props.articleText` come from?
 
-> **Note**: We gave our props a type of `any`, which we learned is highly discouraged. 
-> This is temporary. TypeScript will not compile React components with props that 
-> have no explicit type assignment. At the moment, we don't really know what props are, 
-> let alone what type to give them. So as we're just starting, we'll give it `any`
-> for now and change it later on. 
+> **Note**: We gave our props a type of `any`, which we learned is highly
+> discouraged. This is temporary. TypeScript will not compile React components
+> with props that have no explicit type assignment. At the moment, we don't
+> really know what props are, let alone what type to give them. So as we're just
+> starting, we'll give it `any` for now and change it later on.
 
 ### Passing Information
 
 React allows us to pass units of information from a _parent_ component down to a
-_child_ component. We call these **props**. To better understand, let's demonstrate.
-Let's see how we can pass information from `BlogPost` down to its child `BlogContent`.
+_child_ component. We call these **props**. To better understand, let's
+demonstrate. Let's see how we can pass information from `BlogPost` down to its
+child `BlogContent`.
 
-Create another file in `src/components` called `BlogPost.tsx`. Create the `BlogPost` 
-component with the following: 
+Create another file in `src/components` called `BlogPost.tsx`. Create the
+`BlogPost` component with the following:
 
 ```jsx
-import BlogContent from './BlogContent'
+import BlogContent from "./BlogContent";
 
 function BlogPost() {
   return (
@@ -77,7 +79,7 @@ function BlogPost() {
   );
 }
 
-export default BlogPost
+export default BlogPost;
 ```
 
 Above we see that when we render the `BlogContent` component, we also create a
@@ -115,14 +117,14 @@ But remember, this is JSX and not HTML!
 
 One more thing about props: they can be any data type! In our example, we pass a
 string and a number as props. But we can also pass booleans, objects, functions,
-etc. as props. Whatever their data type, we must tell TypeScript what to expect. 
+etc. as props. Whatever their data type, we must tell TypeScript what to expect.
 
 ### Props
 
-Before we can learn how to type them, let's expand a bit on props here to understand
-what they actually look like under the hood. Taking a look at both of our components 
-will give us a better understanding of how data can be passed from one component to
-another:
+Before we can learn how to type them, let's expand a bit on props here to
+understand what they actually look like under the hood. Taking a look at both of
+our components will give us a better understanding of how data can be passed
+from one component to another:
 
 ```jsx
 // BlogPost.tsx
@@ -239,23 +241,24 @@ function BlogContent(props: any) {
 Above, we are using [_conditional rendering_][conditional rendering] to only
 display the blog content if it is published, based on the `isPublished` prop.
 
-### Assign Types to Props 
+### Assign Types to Props
 
-We've learned that props become an object. This makes typing them quite easy! 
-We already learned how to type objects with [interfaces][interfaces], and we 
-can do the same with props. Let's try it with our `BlogContent` props. 
+We've learned that props become an object. This makes typing them quite easy! We
+already learned how to type objects with [interfaces][interfaces], and we can do
+the same with props. Let's try it with our `BlogContent` props.
 
 Our `BlogContent` props and their expected types are:
+
 - `articleText`: `string`
 - `isPublished`: `boolean`
-- `minutesToRead`: `number` 
+- `minutesToRead`: `number`
 
 We can create an interface detailing that. Let's name it `Props`. Because these
-props specifically belong to our `BlogContent`, we'll define it at the top of its
-file: 
+props specifically belong to our `BlogContent`, we'll define it at the top of
+its file:
 
 ```ts
-// BlogContent.tsx 
+// BlogContent.tsx
 interface Props {
   articleText: string;
   isPublished: boolean;
@@ -263,28 +266,28 @@ interface Props {
 }
 ```
 
-Instead of type `any`, we can now assign the props the type of our `Props` 
+Instead of type `any`, we can now assign the props the type of our `Props`
 interface:
 
-```ts 
+```ts
 function BlogContent(props: Props) {
-  // ... 
+  // ...
 }
 ```
 
 ### Expanding our Application
 
 We still need a `Comment` component that we can use for each comment in a
-`BlogPost`. Create a `Comment.tsx` file in the `src/components` directory. 
+`BlogPost`. Create a `Comment.tsx` file in the `src/components` directory.
 
-Let's have the component return a div with the comment text. Comments will 
-be variable since not everyone will leave the same one. Instead of hard coding
-a comment, we can make it variable with props. Let's name that prop `commentText`,
+Let's have the component return a div with the comment text. Comments will be
+variable since not everyone will leave the same one. Instead of hard coding a
+comment, we can make it variable with props. Let's name that prop `commentText`,
 which we will expect to be of type `string`.
 
-We first have to create a separate interface for our `Comment` props, because it 
-will not look the same as the ones on `BlogContent`. We can still name it `Props`,
-as we're working in a separate file. 
+We first have to create a separate interface for our `Comment` props, because it
+will not look the same as the ones on `BlogContent`. We can still name it
+`Props`, as we're working in a separate file.
 
 ```jsx
 // Comment.tsx
@@ -296,7 +299,7 @@ function Comment(props: Props) {
   return <div>{props.commentText}</div>;
 }
 
-export default Comment
+export default Comment;
 ```
 
 This component, when used, will display content that is passed down to it,
@@ -306,7 +309,7 @@ we want:
 
 ```jsx
 // BlogPost.tsx
-import Comment from './Comment';
+import Comment from "./Comment";
 
 function BlogPost() {
   return (
@@ -328,9 +331,9 @@ function BlogPost() {
   return (
     <div>
       <BlogContent
-          articleText="Dear Reader: Bjarne Stroustrup has the perfect lecture oration."
-          isPublished={true}
-          minutesToRead={1}
+        articleText="Dear Reader: Bjarne Stroustrup has the perfect lecture oration."
+        isPublished={true}
+        minutesToRead={1}
       />
       <Comment commentText="I agree with this statement. - Angela Merkel" />
       <Comment commentText="A universal truth. - Noam Chomsky" />
@@ -400,4 +403,5 @@ into the larger React landscape, and what built-in functionality they come with.
 - [Components and Props](https://reactjs.org/docs/components-and-props.html)
 
 [conditional rendering]: https://reactjs.org/docs/conditional-rendering.html
-[interfaces]: https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#interfaces
+[interfaces]:
+  https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#interfaces
